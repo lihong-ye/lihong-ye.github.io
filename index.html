@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChaGee 茶饮</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8f5e8 100%);
+            color: #333;
+        }
+
+        /* 顶部导航栏 */
+        .header {
+            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            margin-right: 0.5rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* 主菜单 */
+        .main-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .menu-item {
+            position: relative;
+        }
+
+        .menu-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .menu-link:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .menu-link.active {
+            background: #ff6b35;
+            box-shadow: 0 4px 12px rgba(255,107,53,0.3);
+        }
+
+        .menu-icon {
+            font-size: 1.2rem;
+        }
+
+        /* 下拉菜单 */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: #333;
+            text-decoration: none;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-item:hover {
+            background: #f8f9fa;
+            color: #2e7d32;
+            padding-left: 2rem;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        /* 用户操作 */
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-login {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-login:hover {
+            background: white;
+            color: #2e7d32;
+        }
+
+        .btn-register {
+            background: #ff6b35;
+            color: white;
+            box-shadow: 0 4px 12px rgba(255,107,53,0.3);
+        }
+
+        .btn-register:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+        }
+
+        /* 主要内容区域 */
+        .main-content {
+            margin-top: 80px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .main-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .user-actions {
+                margin-top: 1rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">🍵</span>
+                <span class="logo-text">ChaGee</span>
+            </a>
+
+            <ul class="main-menu">
+                <li class="menu-item">
+                    <a href="#home" class="menu-link active">
+                        <span class="menu-icon">🏠</span>
+                        首页
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#menu" class="menu-link">
+                        <span class="menu-icon">📋</span>
+                        菜单
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#classic-tea" class="dropdown-item">经典茶饮</a>
+                        <a href="#fruit-tea" class="dropdown-item">水果茶系列</a>
+                        <a href="#milk-tea" class="dropdown-item">奶茶系列</a>
+                        <a href="#seasonal" class="dropdown-item">季节限定</a>
+                    </div>
+                </li>
+                <li class="menu-item">
+                    <a href="#stores" class="menu-link">
+                        <span class="menu-icon">📍</span>
+                        门店查询
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#about" class="menu-link">
+                        <span class="menu-icon">ℹ️</span>
+                        关于我们
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#contact" class="menu-link">
+                        <span class="menu-icon">📞</span>
+                        联系我们
+                    </a>
+                </li>
+            </ul>
+
+            <div class="user-actions">
+                <a href="#login" class="btn btn-login">登录</a>
+                <a href="#register" class="btn btn-register">注册</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 主要内容 -->
+    <main class="main-content">
+        <section class="hero-section">
+            <h1 class="hero-title">品味每一杯茶的独特故事</h1>
+            <p class="hero-subtitle">新鲜茶叶 · 手工制作 · 独特配方</p>
+        </section>
+
+        <!-- 其他内容可以在这里添加 -->
+        <section>
+            <h2>欢迎来到 ChaGee 茶饮世界</h2>
+            <p>探索我们的特色茶饮，体验不一样的味觉之旅</p>
+        </section>
+    </main>
+
+    <script>
+        // 简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 菜单项点击效果
+            const menuLinks = document.querySelectorAll('.menu-link');
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (!this.href.includes('#')) {
+                        e.preventDefault();
+                    }
+                    
+                    // 移除所有active类
+                    menuLinks.forEach(l => l.classList.remove('active'));
+                    // 添加active类到当前点击的链接
+                    this.classList.add('active');
+                });
+            });
+
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
